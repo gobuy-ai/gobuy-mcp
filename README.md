@@ -4,9 +4,9 @@ A public, read-only MCP server that gives AI agents GoBuy marketplace-evidence s
 
 > Evidence Scores describe available marketplace records, not product quality, safety, value, suitability, seller legitimacy, or a purchase recommendation. Retailers do not endorse GoBuy.
 
-**Public endpoint:** `https://gobuy.ai/mcp`
+**Public endpoint:** `https://mcp.gobuy.ai/mcp`
 
-Service statistics are available at `https://gobuy.ai/stats`.
+Service statistics are available at `https://mcp.gobuy.ai/stats`.
 
 ## Tools
 
@@ -60,7 +60,7 @@ Claude Desktop commonly uses a local bridge for remote Streamable HTTP servers:
   "mcpServers": {
     "gobuy-product-trust": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://gobuy.ai/mcp"]
+      "args": ["-y", "mcp-remote", "https://mcp.gobuy.ai/mcp"]
     }
   }
 }
@@ -72,7 +72,7 @@ Claude Desktop commonly uses a local bridge for remote Streamable HTTP servers:
 {
   "mcpServers": {
     "gobuy-product-trust": {
-      "url": "https://gobuy.ai/mcp"
+      "url": "https://mcp.gobuy.ai/mcp"
     }
   }
 }
@@ -80,7 +80,7 @@ Claude Desktop commonly uses a local bridge for remote Streamable HTTP servers:
 
 ### Generic Streamable HTTP client
 
-Point the client at `https://gobuy.ai/mcp`; no authorization header is needed.
+Point the client at `https://mcp.gobuy.ai/mcp`; no authorization header is needed.
 
 ## Inspector
 
@@ -90,7 +90,7 @@ Run the official MCP Inspector:
 npx @modelcontextprotocol/inspector
 ```
 
-Choose **Streamable HTTP**, enter `https://gobuy.ai/mcp`, connect, list tools, then call `check_product_trust` or `compare_products`.
+Choose **Streamable HTTP**, enter `https://mcp.gobuy.ai/mcp`, connect, list tools, then call `check_product_trust` or `compare_products`.
 
 ## Docker
 
