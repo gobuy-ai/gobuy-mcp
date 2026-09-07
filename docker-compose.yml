@@ -1,0 +1,9 @@
+services:
+  gobuy-product-trust:
+    build: .
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    environment:
+      PORT: "${PORT:-3000}"
+      INTERNAL_API_URL: "${INTERNAL_API_URL:?Set INTERNAL_API_URL to the GoBuy API origin}"
+    restart: unless-stopped
