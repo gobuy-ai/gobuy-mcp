@@ -51,6 +51,19 @@ No client authentication is required in v1. Requests are limited per IP to 60/mi
 
 ## Client configuration
 
+### Any MCP Client
+
+
+```json
+{
+  "mcpServers": {
+    "gobuy-product-trust": {
+      "url": "https://mcp.gobuy.ai/mcp"
+    }
+  }
+}
+```
+
 ### Claude Desktop
 
 Claude Desktop commonly uses a local bridge for remote Streamable HTTP servers:
@@ -66,17 +79,7 @@ Claude Desktop commonly uses a local bridge for remote Streamable HTTP servers:
 }
 ```
 
-### Cursor
 
-```json
-{
-  "mcpServers": {
-    "gobuy-product-trust": {
-      "url": "https://mcp.gobuy.ai/mcp"
-    }
-  }
-}
-```
 
 ### Generic Streamable HTTP client
 
