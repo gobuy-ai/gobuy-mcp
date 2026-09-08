@@ -4,6 +4,8 @@ A public, read-only MCP server that gives AI agents GoBuy marketplace-evidence s
 
 > Evidence Scores describe available marketplace records, not product quality, safety, value, suitability, seller legitimacy, or a purchase recommendation. Retailers do not endorse GoBuy.
 
+> [![smithery badge](https://smithery.ai/badge/hello-4c0c/gobuy-product-trust)](https://smithery.ai/servers/hello-4c0c/gobuy-product-trust)
+
 **Public endpoint:** `https://mcp.gobuy.ai/mcp`
 
 Service statistics are available at `https://mcp.gobuy.ai/stats`.
