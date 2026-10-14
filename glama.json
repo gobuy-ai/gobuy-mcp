@@ -3,5 +3,26 @@
   "maintainers": [
     "gobuy-ai",
     "digitalmentes7-maker"
+  ],
+  "displayName": "GoBuy Product Trust",
+  "description": "Marketplace-evidence trust scores for AI agents — a 0-100 Evidence Score with observed/missing signals for Amazon, Walmart, Target, and Best Buy listings. The reference evaluator for the GPV-1 Pre-Purchase Verification Specification.",
+  "categories": [
+    "e-commerce",
+    "trust",
+    "ai-agents",
+    "reviews",
+    "product-safety"
+  ],
+  "keywords": [
+    "mcp",
+    "product-trust",
+    "e-commerce",
+    "reviews",
+    "ai-agents",
+    "marketplace",
+    "amazon",
+    "evidence-score",
+    "trust-layer",
+    "agent-commerce"
   ]
 }

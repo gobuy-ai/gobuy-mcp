@@ -8,8 +8,8 @@ import { mapScore, rankProducts } from "./trust.js";
 import { RETAILERS, type ProductReference } from "./types.js";
 
 const productSchema = z.object({
-  retailer: z.enum(RETAILERS).describe("Marketplace containing the listing."),
-  product_id: z.string().trim().min(1).max(128).describe("Native retailer product ID, such as an Amazon ASIN."),
+  retailer: z.enum(RETAILERS).describe("Marketplace containing the listing: amazon, walmart, target, or bestbuy."),
+  product_id: z.string().trim().min(1).max(128).describe("Native retailer product ID, such as an Amazon ASIN (e.g. 'B0BXYCS74H')."),
 });
 
 /**
@@ -21,23 +21,44 @@ const productSchema = z.object({
 export function createMcpServer(api: GoBuyApi, onEvent: (entry: Record<string, unknown>) => void = () => {}) {
   const server = new McpServer({
     name: "gobuy-product-trust",
-    version: "1.0.0",
+    version: "1.1.0",
     description: "Marketplace-evidence trust scores for AI agents — one call returns a 0–100 evidence index with full signal breakdown.",
   });
 
   server.registerTool("check_product_trust", {
-    description: "Return the indexed 0–100 marketplace-evidence score and complete available signal breakdown for one retailer listing.",
+    title: "Check Product Trust Score",
+    description:
+      "Return the GoBuy Evidence Score (0-100) and complete signal breakdown for a single retailer listing on Amazon, Walmart, Target, or Best Buy. " +
+      "This is the GPV-1 gate evaluator: score >= 55 PASS, 35-54 FLAG, < 35 or not-indexed BLOCK. " +
+      "Use this for individual product lookups. To compare and rank multiple products, use `compare_products` instead. " +
+      "Read-only — does not modify any state or place orders. Scores describe available marketplace records, not product quality or purchase recommendations.",
     inputSchema: productSchema.shape,
-    annotations: { readOnlyHint: true, openWorldHint: true },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   }, async (input) => {
     const reference: ProductReference = input;
     return runTool("check_product_trust", async () => mapScore(reference, await api.score(reference)));
   });
 
   server.registerTool("compare_products", {
-    description: "Compare 2–20 retailer listings and rank them by marketplace-evidence score. This is not purchase advice.",
-    inputSchema: { products: z.array(productSchema).min(2).max(20) },
-    annotations: { readOnlyHint: true, openWorldHint: true },
+    title: "Compare and Rank Products",
+    description:
+      "Fetch Evidence Scores for 2-20 retailer listings and rank them by GoBuy Evidence Score (highest first). " +
+      "Use this when an agent is choosing between multiple products. For a single product lookup, use `check_product_trust` instead. " +
+      "Read-only — does not modify any state or place orders. Unindexed products rank last. This is not purchase advice.",
+    inputSchema: {
+      products: z.array(productSchema).min(2).max(20).describe("Array of 2-20 product references to compare and rank."),
+    },
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+    },
   }, async ({ products }) => runTool("compare_products", async () => ({
     comparison: rankProducts(await Promise.all(products.map(async (ref) => mapScore(ref, await api.score(ref))))),
     ranking_basis: "Descending GoBuy Evidence Score; unindexed products rank last.",
@@ -65,7 +86,7 @@ export function createApp(options: { api?: GoBuyApi; now?: () => number; minuteL
   const stats = { started_at: new Date().toISOString(), total_calls: 0, tools: { check_product_trust: 0, compare_products: 0 }, errors: 0 };
   const onEvent = (entry: Record<string, unknown>) => {
     stats.total_calls++;
-    if (entry.tool === "check_product_trust" || entry.tool === "compare_products") stats.tools[entry.tool]++;
+    if (entry.tool === "check_product_trust" || entry.tool === "compare_products") stats.tools[entry.tool as "check_product_trust" | "compare_products"]++;
     if (entry.status === "error") stats.errors++;
     process.stderr.write(`${JSON.stringify(entry)}\n`);
   };

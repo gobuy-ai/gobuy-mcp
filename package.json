@@ -1,7 +1,7 @@
 {
   "name": "gobuy-product-trust",
-  "version": "1.0.0",
-  "description": "Marketplace-evidence trust scores for AI agents — one call returns a 0–100 evidence index with full signal breakdown.",
+  "version": "1.1.0",
+  "description": "Marketplace-evidence trust scores for AI agents — a 0-100 Evidence Score with observed/missing signals for Amazon, Walmart, Target, and Best Buy listings. The reference evaluator for the GPV-1 Pre-Purchase Verification Specification.",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -26,5 +26,26 @@
     "tsx": "4.22.4",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"
-  }
+  },
+  "homepage": "https://gobuy.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gobuy-ai/gobuy-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gobuy-ai/gobuy-mcp/issues"
+  },
+  "author": "GoBuy",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "product-trust",
+    "e-commerce",
+    "reviews",
+    "ai-agents",
+    "marketplace",
+    "evidence-score",
+    "trust-layer",
+    "agent-commerce"
+  ]
 }
