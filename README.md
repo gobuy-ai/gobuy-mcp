@@ -52,3 +52,6 @@ No client authentication required. Rate limited per IP: 60/minute, 1,000/day (42
 ## License
 
 MIT
+## Changelog
+
+- 2026-10-14: stdio transport (MCP_TRANSPORT=stdio) for mcp-proxy deployments; stdout reserved for JSON-RPC, logs to stderr.
