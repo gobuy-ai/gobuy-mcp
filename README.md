@@ -40,6 +40,11 @@ Evidence Scores describe available marketplace records, not product quality, saf
 ### Inspector
 `npx @modelcontextprotocol/inspector` -> Streamable HTTP -> `https://mcp.gobuy.ai/mcp` -> list tools -> call `check_product_trust`.
 
+## Transports
+
+- **stdio** (for `mcp-proxy` bridges, e.g. Glama deploys): set `MCP_TRANSPORT=stdio`. The server speaks MCP over stdin/stdout; stdout carries only JSON-RPC, all logs go to stderr.
+- **HTTP** (default): listens on `PORT` (default 3000), endpoint `/mcp`, health at `GET /mcp`, stats at `GET /stats`.
+
 ## Limits
 
 No client authentication required. Rate limited per IP: 60/minute, 1,000/day (429 + Retry-After). Everything is free within rate limits; an optional free API key raises them.
